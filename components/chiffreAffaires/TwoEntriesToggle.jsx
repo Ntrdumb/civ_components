@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function TwoEntriesToggle({ options = ['$ CAD', '€ EUR'], onToggle }) {
+export default function TwoEntriesToggle({ options, onToggle }) {
   const [selectedOption, setSelectedOption] = useState(options[0]);
 
   const toggleOption = () => {

@@ -15,7 +15,7 @@ function getPrecisionColor(precisionLevel) {
 }
 
 // Define the ChiffreAffaires component
-export default function ChiffreAffaires({ precisionLevel = 50 }) { // precisionLevel ranges from 1 to 100
+export default function ChiffreAffaires({ precisionLevel = 90 }) { // precisionLevel ranges from 1 to 100
   const [isExpanded, setIsExpanded] = useState(true);
   const [activeTab, setActiveTab] = useState('persona');
   const [contentHeight, setContentHeight] = useState('auto');
@@ -43,10 +43,24 @@ export default function ChiffreAffaires({ precisionLevel = 50 }) { // precisionL
   // Calculate the height of the content when expanded
   useEffect(() => {
     updateContentHeight();
+    // console.log("Active tab : " + activeTab)
   }, [isExpanded, activeTab]); // Recalculate height on tab change or expand state change
 
+  // Recalculate height when any re-render inside child components occurs
+  useEffect(() => {
+    const observer = new MutationObserver(updateContentHeight);
+    if (contentRef.current) {
+      observer.observe(contentRef.current, { childList: true, subtree: true });
+    }
+    return () => {
+      if (contentRef.current) {
+        observer.disconnect();
+      }
+    };
+  }, []);
+
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 max-w-md">
+    <div className="bg-white rounded-lg shadow-lg p-6 w-[700px] max-w-lg">
       {/* Header with title and icons */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">CHIFFRE D'AFFAIRES POTENTIEL</h2>
@@ -94,8 +108,8 @@ export default function ChiffreAffaires({ precisionLevel = 50 }) { // precisionL
           </div>
         </div>
 
-        {/* Additional information (Bottom part) */}
-        <div className="border-t pt-4 w-full max-w-sm">
+        {/* Bottom part (Additional information) */}
+        <div className="border-t pt-4 w-full max-w-lg">
 
           {/* Bottom title */}
           <div className="flex justify-between items-center mb-4 cursor-pointer" onClick={toggleExpand}>
@@ -111,7 +125,7 @@ export default function ChiffreAffaires({ precisionLevel = 50 }) { // precisionL
           >
 
             {/* Buttons for persona, project, history */}
-            <div className="flex space-x-2 mb-4">
+            <div className="flex space-x-2 mb-4 justify-center">
               <button className={`px-3 py-3 rounded-xl text-sm ${activeTab === 'persona' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                 onClick={() => setActiveTab('persona')}
               >

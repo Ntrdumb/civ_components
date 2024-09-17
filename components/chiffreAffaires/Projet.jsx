@@ -2,7 +2,10 @@ import { useState } from 'react';
 import TwoEntriesToggle from './TwoEntriesToggle';
 
 export default function Projet() {
-  console.log("PRojet");
+  // console.log("PRojet");
+  const currencyOptions = ['$ CAD', '€ EUR'];
+  const surfaceOptions = ['pi2', 'm2'];
+
   const [formData, setFormData] = useState({
     budget: '',
     surface: '',
@@ -26,12 +29,12 @@ export default function Projet() {
             type="text"
             name="budget"
             value={formData.budget}
-            onChange={handleInputChange}
-            className="flex-grow border border-gray-300 rounded p-2 text-sm"
+            // onChange={handleInputChange}
+            className="flex-grow border border-gray-300 rounded p-2 text-sm placeholder:italic"
             placeholder="Écrivez le budget alloué"
           />
           
-          <TwoEntriesToggle />
+          <TwoEntriesToggle options={currencyOptions}/>
         </div>
       </div>
       <div>
@@ -43,12 +46,12 @@ export default function Projet() {
             type="text"
             name="surface"
             value={formData.surface}
-            onChange={handleInputChange}
-            className="flex-grow border border-gray-300 rounded p-2 text-sm"
+            // onChange={handleInputChange}
+            className="flex-grow border border-gray-300 rounded p-2 text-sm placeholder:italic"
             placeholder="Écrivez la surface"
           />
 
-          <TwoEntriesToggle />
+          <TwoEntriesToggle options={surfaceOptions}/>
         </div>
       </div>
       <div>
@@ -59,8 +62,8 @@ export default function Projet() {
           type="text"
           name="employees"
           value={formData.employees}
-          onChange={handleInputChange}
-          className="w-full border border-gray-300 rounded p-2 text-sm"
+          // onChange={(handleInputChange)}
+          className="w-full border border-gray-300 rounded p-2 text-sm placeholder:italic"
           placeholder="Écrivez le nombre de salariés futurs"
         />
       </div>
@@ -73,11 +76,11 @@ export default function Projet() {
             type="text"
             name="salary"
             value={formData.salary}
-            onChange={handleInputChange}
-            className="flex-grow border border-gray-300 rounded p-2 text-sm"
+            // onChange={handleInputChange}
+            className="flex-grow border border-gray-300 rounded p-2 text-sm placeholder:italic"
             placeholder="Écrivez le montant du salaire"
           />
-          <TwoEntriesToggle />
+          <TwoEntriesToggle options={currencyOptions}/>
         </div>
       </div>
       <div>
@@ -89,11 +92,11 @@ export default function Projet() {
             type="text"
             name="expenses"
             value={formData.expenses}
-            onChange={handleInputChange}
-            className="flex-grow border border-gray-300 rounded p-2 text-sm"
+            // onChange={handleInputChange}
+            className="flex-grow border border-gray-300 rounded p-2 text-sm placeholder:italic"
             placeholder="Écrivez les dépenses estimées"
           />
-          <TwoEntriesToggle />
+          <TwoEntriesToggle options={currencyOptions}/>
         </div>
       </div>
     </div>

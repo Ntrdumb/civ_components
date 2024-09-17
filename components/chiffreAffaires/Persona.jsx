@@ -12,11 +12,11 @@ export default function Persona() {
         <div>
             <div className="flex items-end space-x-2">
             <textarea 
-                className="flex-grow bg-white border border-gray-300 rounded p-2 text-sm resize-none"
+                className="flex-grow bg-white border border-gray-300 rounded p-2 text-sm placeholder:italic resize-none"
                 rows={3}
                 defaultValue="Je cible les femmes entre 25 et 40 ans, qui habitent à Montréal avec un revenu dépassant les 20 000$ par année."
             />
-            <button className="text-gray-500 hover:text-gray-700 p-2">
+            <button className="rounded-md border border-gray-300 text-gray-500 hover:text-gray-700 p-2">
                 <ChevronRightIcon size={20} />
             </button>
             </div>
