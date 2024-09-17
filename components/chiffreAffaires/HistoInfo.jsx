@@ -51,8 +51,20 @@ export default function HistoInfo({ labelSuffix = '' }) { // Pass labelSuffix as
     return fileName.length > 12 ? fileName.slice(0, 9) + '...' : fileName;
   };
 
+  function getEverything() {
+    // const fileInfo = `File: ${selectedFile.name}, Size: ${selectedFile.size} bytes, Type: ${selectedFile.type}`;
+    console.log("Mon Historique: " + averageBasket + ", " + totalExpenses + ", " + globalTurnover + ", ");
+    if (selectedFile) {
+      console.log(selectedFile.name);
+    }
+  }
+
   return (
     <div className="space-y-4 mt-2">
+      <button className="bg-white p-1.5 rounded-md border border-gray-300 text-gray-500 hover:text-gray-700 fixed right-0"
+          onClick={getEverything}>
+          Get it Histo
+      </button>
       {/* Panier moyen et total des dépenses */}
       <div className="flex space-x-4 text-gray-700">
         {/* Textbox div */}
@@ -70,7 +82,7 @@ export default function HistoInfo({ labelSuffix = '' }) { // Pass labelSuffix as
                 placeholder="Écrivez le panier moyen"
                 className="flex-grow border border-gray-300 rounded p-2 text-xs placeholder:italic"
               />
-              <TwoEntriesToggle options={currencyOptions} />
+              {/* <TwoEntriesToggle options={currencyOptions} /> */}
             </div>
           </div>
 
@@ -87,14 +99,14 @@ export default function HistoInfo({ labelSuffix = '' }) { // Pass labelSuffix as
                 placeholder="Écrivez le budget existantes"
                 className="flex-grow border border-gray-300 rounded p-2 text-xs placeholder:italic"
               />
-              <TwoEntriesToggle options={currencyOptions} />
+              {/* <TwoEntriesToggle options={currencyOptions} /> */}
             </div>
           </div>
         </div>
 
         {/* Separator line */}
         <div className="border-l border-gray-300"></div>
-
+        
         {/* Import div */}
         <div
           className={`flex-1 flex items-center justify-center p-4 ${isDragActive ? 'border-4 border-dotted border-indigo-500' : 'border border-gray-300'}`}
@@ -156,7 +168,7 @@ export default function HistoInfo({ labelSuffix = '' }) { // Pass labelSuffix as
             placeholder="Écrivez le budget alloué"
             className="flex-grow border border-gray-300 text-gray-700 rounded p-2 text-xs placeholder:italic"
           />
-          <TwoEntriesToggle options={currencyOptions} />
+          {/* <TwoEntriesToggle options={currencyOptions} /> */}
         </div>
       </div>
     </div>

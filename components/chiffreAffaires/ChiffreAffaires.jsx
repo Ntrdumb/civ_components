@@ -15,7 +15,7 @@ function getPrecisionColor(precisionLevel) {
 }
 
 // Define the ChiffreAffaires component
-export default function ChiffreAffaires({ precisionLevel = 90 }) { // precisionLevel ranges from 1 to 100
+export default function ChiffreAffaires({ precisionLevel = 50 }) { // precisionLevel ranges from 1 to 100
   const [isExpanded, setIsExpanded] = useState(true);
   const [activeTab, setActiveTab] = useState('persona');
   const [contentHeight, setContentHeight] = useState('auto');
@@ -144,21 +144,19 @@ export default function ChiffreAffaires({ precisionLevel = 90 }) { // precisionL
             </div>
 
             {/*  Mon persona ciblé Button contents */}
-            {activeTab === 'persona' && (
+            <div className={`${activeTab === 'persona' ? 'block' : 'hidden'}`}>
               <Persona />
-            )} {/* Mon persona ciblé Button contents end */}
+            </div>{/* Mon persona ciblé Button contents end */}
 
             {/* Mon projet Button contents */}
-            {activeTab === 'projet' && (
-                <Projet />
-            )} {/* Mon projet Button contents end */}
+            <div className={`${activeTab === 'projet' ? 'block' : 'hidden'}`}>
+              <Projet />
+            </div> {/* Mon projet Button contents end */}
 
             {/* Mon historique Button contents */}
-            {activeTab === 'historique' && (
-              <div>
-                <Historique />
-              </div>
-            )} {/* Mon historique Button contents end */}
+            <div className={`${activeTab === 'historique' ? 'block' : 'hidden'}`}>
+              <Historique />
+            </div>{/* Mon historique Button contents end */}
 
           </div> { /* Additional information end */}   
       

@@ -8,6 +8,10 @@ export default function Persona() {
         setTags(tags.filter(tag => tag !== tagToRemove))
     }
 
+    function getEverything() {
+        console.log("Mon persona: " + tags);
+    }
+
     return (
         <div>
             <div className="flex items-end space-x-2">
@@ -34,6 +38,12 @@ export default function Persona() {
                 </span>
             ))}
             </div>
+            
+            <button className="bg-white p-1.5 rounded-md border border-gray-300 text-gray-500 hover:text-gray-700 fixed right-0"
+                    onClick={getEverything}>
+                Get it
+            </button>
+            
         </div>
     )
 }
