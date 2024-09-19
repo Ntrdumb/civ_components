@@ -1,18 +1,24 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
-export default function FileDialog({ labelSuffix = '' }) {
+export default function FileDialog({ labelSuffix = '', onFileSelect, onFileRemove }) {
+  const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null); // State for file selection
   const [isDragActive, setIsDragActive] = useState(false); // State for drag and drop
+
+  const handleClick = () => {
+    fileInputRef.current.click();
+  };
 
   // Handle file input change
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Get the selected file
     if (file) {
       setSelectedFile(file); // Save the file in state
+      onFileSelect(file); // Call the provided onFileSelect prop
       console.log(file.name);
     }
   };
-
+  
   // Handle file drop (drag and drop)
   const handleFileDrop = (e) => {
     e.preventDefault();
@@ -20,6 +26,7 @@ export default function FileDialog({ labelSuffix = '' }) {
     const file = e.dataTransfer.files[0];
     if (file) {
       setSelectedFile(file); // Save the file in state
+      onFileSelect(file); // Call the provided onFileSelect prop
     }
     setIsDragActive(false); // Remove drag active state
   };
@@ -39,6 +46,7 @@ export default function FileDialog({ labelSuffix = '' }) {
   // Handle file removal
   const handleFileRemove = () => {
     setSelectedFile(null); // Remove the file from state
+    onFileRemove();
   };
 
   // Abbreviate file name if it's too long
@@ -60,6 +68,7 @@ export default function FileDialog({ labelSuffix = '' }) {
         {/* Hidden file input */}
         <input
           type="file"
+          ref={fileInputRef}
           className="hidden"
           id="fileInput"
           onChange={handleFileChange}
@@ -67,7 +76,7 @@ export default function FileDialog({ labelSuffix = '' }) {
 
         {/* File import button */}
         <button
-          onClick={() => document.getElementById('fileInput').click()} // Trigger file input
+          onClick={handleClick} // Trigger file input
           className="w-16 h-16 bg-white border border-gray-300 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-50"
         >
           {selectedFile ? (

@@ -2,10 +2,11 @@ import { useState } from 'react';
 import FileDialog from './FileDialog';
 import TwoEntriesToggle from './TwoEntriesToggle';
 
-export default function HistoInfo({ labelSuffix = '' }) { // Pass labelSuffix as a prop with a default value
+export default function HistoInfo({ labelSuffix = '' }) {
   const [averageBasket, setAverageBasket] = useState('');
   const [totalExpenses, setTotalExpenses] = useState('');
   const [globalTurnover, setGlobalTurnover] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const currencyOptions = ['$ CAD', '€ EUR'];
 
@@ -15,6 +16,14 @@ export default function HistoInfo({ labelSuffix = '' }) { // Pass labelSuffix as
     if (selectedFile) {
       console.log(selectedFile.name);
     }
+  }
+  
+  const handleFileSelect = (file) => {
+    setSelectedFile(file);
+  };
+
+  const handleFileRemove = () => {
+    setSelectedFile(null);
   }
 
   return (
@@ -66,7 +75,7 @@ export default function HistoInfo({ labelSuffix = '' }) { // Pass labelSuffix as
         <div className="border-l border-gray-300"></div>
         
         {/* Import div */}
-        <FileDialog labelSuffix={labelSuffix} /> 
+        <FileDialog labelSuffix={labelSuffix} onFileSelect={handleFileSelect} onFileRemove={handleFileRemove}/> 
       </div>
 
       {/* Chiffre d'affaires global existants */}
