@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { XIcon, InfoIcon, ChevronUpIcon, ChevronDownIcon } from 'lucide-react';
 import { Collapse } from 'react-collapse';
 import Persona from './Persona';
-import Projet from './projet'; 
+import Projet from './Projet'; 
 import Historique from './Historique';
 
 // Helper function to compute a smooth gradient between red and teal based on precision level
