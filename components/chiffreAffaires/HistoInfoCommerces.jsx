@@ -1,72 +1,49 @@
-import { useState } from 'react';
 import { Plus } from 'lucide-react';
+import { useCommerceContext } from './CommerceContext';
 import Commerce from './Commerce';
 
-export default function HistoInfoCommerces(onContentChange) {
-  const [commerces, setCommerces] = useState([{ num: 1, address: '', isAddressSet: false }]);
-  const [addresses, setAddresses] = useState(['']); // State to track addresses for all commerces
-  const [radius, setRadius] = useState(''); // Handle radius globally if necessary
+export default function HistoInfoCommerces() {
+  const { commerces, setCommerces } = useCommerceContext();
 
-  // Handle radius change
-  const handleRadiusChange = (newRadius) => {
-    setRadius(newRadius); // Update the global radius state
-  };
-
-  // Save address globally for access
-  const handleSaveAddress = (index, address) => {
-    const updatedCommerces = [...commerces];
-    updatedCommerces[index].address = address;
-    updatedCommerces[index].isAddressSet = true;
-    setCommerces(updatedCommerces);
-
-    const updatedAddresses = [...addresses];
-    updatedAddresses[index] = address;
-    setAddresses(updatedAddresses);
-  };
-
-  // Handle removing the address and unlocking the input/button
-  const handleRemoveAddress = (index) => {
+  const handleRemoveCommerce = (index) => {
     if (commerces.length > 1) {
-      const updatedCommerces = commerces.filter((_, idx) => idx !== index);
-      const updatedAddresses = addresses.filter((_, idx) => idx !== index);
+      let updatedCommerces = commerces.filter((_, idx) => idx !== index);
 
-      const renumberedCommerces = updatedCommerces.map((commerce, idx) => ({
+      // Renumber the remaining commerces
+      updatedCommerces = updatedCommerces.map((commerce, idx) => ({
         ...commerce,
-        num: idx + 1,
+        num: idx + 1, // Renumber the remaining commerces
       }));
-      
-      setCommerces(renumberedCommerces);
-      setAddresses(updatedAddresses);
-    } else {
-      const updatedCommerces = [...commerces];
-      updatedCommerces[index].address = '';
-      updatedCommerces[index].isAddressSet = false;
-      setCommerces(updatedCommerces);
 
-      const updatedAddresses = [...addresses];
-      updatedAddresses[index] = '';
-      setAddresses(updatedAddresses);
+      setCommerces(updatedCommerces);
+    } else {
+      // Reset the only remaining commerce
+      const updatedCommerces = [...commerces];
+      updatedCommerces[0] = {
+        num: 1,
+        address: '',
+        isAddressSet: false,
+        averageBasket: '',
+        totalExpenses: '',
+        globalTurnover: '',
+        selectedFile: null,
+        radius: '',
+      };
+      setCommerces(updatedCommerces);
     }
   };
 
   // Function to add a new commerce
   const handleAddCommerce = () => {
-    setCommerces([...commerces, { num: commerces.length + 1, address: '', isAddressSet: false }]);
-    setAddresses([...addresses, '']);
+    setCommerces([...commerces, { num: commerces.length + 1, address: '', isAddressSet: false, averageBasket: '', totalExpenses: '', globalTurnover: '', selectedFile: null }]);
   };
 
   return (
     <div>
       {/* Pass all commerces to the Commerce component */}
-      <Commerce
-        commerces={commerces}
-        addresses={addresses}
-        setAddresses={setAddresses}
-        handleSaveAddress={handleSaveAddress}
-        handleRemoveAddress={handleRemoveAddress}
-        handleRadiusChange={handleRadiusChange}
-        
-      />
+      {commerces.map((commerce, index) => (
+        <Commerce key={index} index={index} commerce={commerce} handleRemoveCommerce={handleRemoveCommerce} commercesLength={commerces.length} />
+      ))}
 
       {/* Conditionally render "Add a commerce" button only when the latest address is set */}
       {commerces[commerces.length - 1].isAddressSet && (

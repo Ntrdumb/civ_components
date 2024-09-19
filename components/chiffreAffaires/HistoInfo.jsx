@@ -1,12 +1,31 @@
 import { useState } from 'react';
+import { useCommerceContext } from './CommerceContext';
 import FileDialog from './FileDialog';
 import TwoEntriesToggle from './TwoEntriesToggle';
 
-export default function HistoInfo({ labelSuffix = '' }) {
-  const [averageBasket, setAverageBasket] = useState('');
-  const [totalExpenses, setTotalExpenses] = useState('');
-  const [globalTurnover, setGlobalTurnover] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
+export default function HistoInfo({ labelSuffix = '', index }) {
+  let commerce, handleSaveCommerce;
+
+  // Check if the context is available
+  try {
+    const context = useCommerceContext();
+    commerce = context.commerces ? context.commerces[index] : undefined;
+    handleSaveCommerce = context.handleSaveCommerce;
+  } catch (error) {
+    // Context is not available, so fallback to local state
+    commerce = undefined;
+  }
+
+  // Fallback to local state when context is not available (i.e., when used outside CommerceContext)
+  const [averageBasket, setAverageBasket] = useState(commerce?.averageBasket || '');
+  const [totalExpenses, setTotalExpenses] = useState(commerce?.totalExpenses || '');
+  const [globalTurnover, setGlobalTurnover] = useState(commerce?.globalTurnover || '');
+  const [selectedFile, setSelectedFile] = useState(commerce?.selectedFile || null);
+
+  // Add a guard to prevent accessing properties of undefined
+  // if (!commerce) {
+  //   return <div>Loading...</div>;  // Or handle the case where commerce is undefined
+  // }
 
   const currencyOptions = ['$ CAD', '€ EUR'];
 
@@ -19,13 +38,43 @@ export default function HistoInfo({ labelSuffix = '' }) {
   }
   
   const handleFileSelect = (file) => {
-    setSelectedFile(file);
+    if (handleSaveCommerce) {
+      handleSaveCommerce(index, 'selectedFile', file);
+    } else {
+      setSelectedFile(file);
+    }
   };
 
   const handleFileRemove = () => {
-    setSelectedFile(null);
+    if (handleSaveCommerce) {
+      handleSaveCommerce(index, 'selectedFile', null);
+    } else {
+      setSelectedFile(null);
+    }
   }
 
+  const handleSaveField = (field, value) => {
+    if (handleSaveCommerce) {
+      console.log("THERES A COMMERCE!");
+      handleSaveCommerce(index, field, value);
+    } else {
+      // Update local state when not connected to context
+      switch (field) {
+        case 'averageBasket':
+          setAverageBasket(value);
+          break;
+        case 'totalExpenses':
+          setTotalExpenses(value);
+          break;
+        case 'globalTurnover':
+          setGlobalTurnover(value);
+          break;
+        default:
+          break;
+      }
+    }
+  };
+  
   return (
     <div className="space-y-4 mt-2">
       <button className="bg-white p-1.5 rounded-md border border-gray-300 text-gray-500 hover:text-gray-700 fixed right-0"
@@ -44,8 +93,8 @@ export default function HistoInfo({ labelSuffix = '' }) {
             <div className="flex items-center">
               <input
                 type="text"
-                value={averageBasket}
-                onChange={(e) => setAverageBasket(e.target.value)}
+                value={commerce ? commerce.averageBasket : averageBasket}
+                onChange={(e) => handleSaveField('averageBasket', e.target.value)}
                 placeholder="Écrivez le panier moyen"
                 className="flex-grow border border-gray-300 rounded p-2 text-xs placeholder:italic"
               />
@@ -61,8 +110,8 @@ export default function HistoInfo({ labelSuffix = '' }) {
             <div className="flex items-center">
               <input
                 type="text"
-                value={totalExpenses}
-                onChange={(e) => setTotalExpenses(e.target.value)}
+                value={commerce ? commerce.totalExpenses : totalExpenses}
+                onChange={(e) => handleSaveField('totalExpenses', e.target.value)}
                 placeholder="Écrivez le budget existantes"
                 className="flex-grow border border-gray-300 rounded p-2 text-xs placeholder:italic"
               />
@@ -75,7 +124,7 @@ export default function HistoInfo({ labelSuffix = '' }) {
         <div className="border-l border-gray-300"></div>
         
         {/* Import div */}
-        <FileDialog labelSuffix={labelSuffix} onFileSelect={handleFileSelect} onFileRemove={handleFileRemove}/> 
+        <FileDialog labelSuffix={labelSuffix} selectedFile={commerce ? commerce.selectedFile : selectedFile} onFileSelect={handleFileSelect} onFileRemove={handleFileRemove}/> 
       </div>
 
       {/* Chiffre d'affaires global existants */}
@@ -86,8 +135,8 @@ export default function HistoInfo({ labelSuffix = '' }) {
         <div className="flex items-center">
           <input
             type="text"
-            value={globalTurnover}
-            onChange={(e) => setGlobalTurnover(e.target.value)}
+            value={commerce ? commerce.globalTurnover : globalTurnover}
+            onChange={(e) => handleSaveField('globalTurnover', e.target.value)}
             placeholder="Écrivez le budget alloué"
             className="flex-grow border border-gray-300 text-gray-700 rounded p-2 text-xs placeholder:italic"
           />

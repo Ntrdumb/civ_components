@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react';
 
-export default function FileDialog({ labelSuffix = '', onFileSelect, onFileRemove }) {
+export default function FileDialog({ labelSuffix = '', selectedFile, onFileSelect, onFileRemove }) {
   const fileInputRef = useRef(null);
-  const [selectedFile, setSelectedFile] = useState(null); // State for file selection
+  // const [selectedFile, setSelectedFile] = useState(null); // State for file selection
   const [isDragActive, setIsDragActive] = useState(false); // State for drag and drop
 
   const handleClick = () => {
@@ -13,7 +13,7 @@ export default function FileDialog({ labelSuffix = '', onFileSelect, onFileRemov
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Get the selected file
     if (file) {
-      setSelectedFile(file); // Save the file in state
+      // setSelectedFile(file); // Save the file in state
       onFileSelect(file); // Call the provided onFileSelect prop
       console.log(file.name);
     }
@@ -25,7 +25,7 @@ export default function FileDialog({ labelSuffix = '', onFileSelect, onFileRemov
     e.stopPropagation();
     const file = e.dataTransfer.files[0];
     if (file) {
-      setSelectedFile(file); // Save the file in state
+      // setSelectedFile(file); // Save the file in state
       onFileSelect(file); // Call the provided onFileSelect prop
     }
     setIsDragActive(false); // Remove drag active state
@@ -45,7 +45,7 @@ export default function FileDialog({ labelSuffix = '', onFileSelect, onFileRemov
 
   // Handle file removal
   const handleFileRemove = () => {
-    setSelectedFile(null); // Remove the file from state
+    // setSelectedFile(null); // Remove the file from state
     onFileRemove();
   };
 

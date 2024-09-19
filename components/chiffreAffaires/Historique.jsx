@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { CommerceProvider } from './CommerceContext';
 import SideToggle from './SideToggle';
 import HistoInfo from './HistoInfo';
 import HistoInfoCommerces from './HistoInfoCommerces';
 
 export default function Historique() {
   const [infoType, setInfoType] = useState('globales'); // Manage state here
+  const histoInfoRef = useRef();
+  const histoInfoCommercesRef = useRef();
 
   // Function to toggle infoType
   const toggleInfoType = (newType) => {
@@ -19,13 +22,22 @@ export default function Historique() {
       {/* Content */}
       <div className="relative">
         {/* Both components are rendered, but only one is shown at a time using CSS */}
-        <div className={`${infoType === 'globales' ? 'block' : 'hidden'}`}>
-          {console.log("HistoInfo")} 
+        <div
+          ref={histoInfoRef}
+          className={`${infoType === 'globales' ? 'block' : 'hidden'}`}
+        >
+          {console.log("HistoInfo")}
           <HistoInfo />
         </div>
-        <div className={`${infoType === 'commerces' ? 'block' : 'hidden'}`}>
-          {console.log("HistoInfoCommerces")} 
-          <HistoInfoCommerces />
+
+        <div
+          ref={histoInfoCommercesRef}
+          className={`${infoType === 'commerces' ? 'block' : 'hidden'}`}
+        >
+          <CommerceProvider>
+            {console.log("HistoInfoCommerces")}
+            <HistoInfoCommerces />
+          </CommerceProvider>
         </div>
       </div>
     </div>

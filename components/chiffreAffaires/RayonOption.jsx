@@ -1,21 +1,17 @@
 import { ChevronDownIcon } from 'lucide-react';
-import { useState } from 'react';
 
-function RayonOption({ radiusOptions = [], onRadiusChange }) { 
-  const [radius, setRadius] = useState('Rayon autour de l\'adresse');
-
+function RayonOption({ radiusOptions = [], onRadiusChange, selectedRadius }) { 
   const handleRadiusChange = (e) => {
     const selectedRadius = e.target.value;
-    setRadius(selectedRadius); // Update local state
-    onRadiusChange(selectedRadius); // Call the parent handler
+    onRadiusChange(selectedRadius); // Call the parent handler to update the radius in context
   };
 
   return (
-    <div className='flex items-center space-x-2 my-2 '>
-      <h3 className="text-xs font-medium text-gray-700 mb-1">Le rayon de chalandise du commerce 1</h3>
+    <div className='flex items-center space-x-2 my-2'>
+      <h3 className="text-xs font-medium text-gray-700 mb-1">Le rayon de chalandise du commerce</h3>
       <div className="relative">
         <select
-          value={radius}
+          value={selectedRadius || 'Rayon autour de l\'adresse'}
           onChange={handleRadiusChange}
           className="block appearance-none w-full text-xs italic bg-white border border-gray-300 text-gray-500 py-0.5 px-2 pr-8 rounded leading-tight focus:outline-none focus:ring focus:border-blue-300"
         >
