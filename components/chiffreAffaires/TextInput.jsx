@@ -1,3 +1,4 @@
+// Self-explanatory
 export default function TextInput({ label, value, onChange, placeholder }) {
     return (
       <div className="mb-4">

@@ -9,7 +9,7 @@ export default function Historique() {
   const histoInfoRef = useRef();
   const histoInfoCommercesRef = useRef();
 
-  // Function to toggle infoType
+  // Toggles infoType
   const toggleInfoType = (newType) => {
     setInfoType(newType);
   };
@@ -34,6 +34,7 @@ export default function Historique() {
           ref={histoInfoCommercesRef}
           className={`${infoType === 'commerces' ? 'block' : 'hidden'}`}
         >
+          {/* Will differientiate between the HistoInfo above and the HistoInfo inside HistoInfoCommerces */}
           <CommerceProvider>
             {/* {console.log("HistoInfoCommerces")} */}
             <HistoInfoCommerces />

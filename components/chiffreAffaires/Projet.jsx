@@ -4,6 +4,7 @@ import TwoEntriesToggle from './TwoEntriesToggle';
 export default function Projet() {
   const currencyOptions = ['$ CAD', '€ EUR'];
   const surfaceOptions = ['pi2', 'm2'];
+  const surfaceToggleRef = useRef();
 
   const [formData, setFormData] = useState({
     budget: '',
@@ -13,8 +14,7 @@ export default function Projet() {
     expenses: ''
   });
 
-  const surfaceToggleRef = useRef();
-
+  // Handles the input change of text inputs
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };

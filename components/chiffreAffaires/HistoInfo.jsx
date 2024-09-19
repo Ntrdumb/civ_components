@@ -17,7 +17,7 @@ export default function HistoInfo({ labelSuffix = '', index }) {
     commerce = undefined;
   }
 
-  // Fallback to local state when context is not available (i.e., when used outside CommerceContext)
+  // Fallback to local state when context is not available (ex.: when used outside CommerceContext)
   const [averageBasket, setAverageBasket] = useState(commerce?.averageBasket || '');
   const [totalExpenses, setTotalExpenses] = useState(commerce?.totalExpenses || '');
   const [globalTurnover, setGlobalTurnover] = useState(commerce?.globalTurnover || '');
@@ -50,6 +50,7 @@ export default function HistoInfo({ labelSuffix = '', index }) {
     }
   }
   
+  // Handles file select either with context or lcoally
   const handleFileSelect = (file) => {
     if (handleSaveCommerce) {
       handleSaveCommerce(index, 'selectedFile', file);
@@ -58,6 +59,7 @@ export default function HistoInfo({ labelSuffix = '', index }) {
     }
   };
 
+  // Handles file remove either with context or lcoally
   const handleFileRemove = () => {
     if (handleSaveCommerce) {
       handleSaveCommerce(index, 'selectedFile', null);
@@ -66,6 +68,7 @@ export default function HistoInfo({ labelSuffix = '', index }) {
     }
   }
 
+  // Handles file save either with context or lcoally
   const handleSaveField = (field, value) => {
     if (handleSaveCommerce) {
       // console.log("THERES A COMMERCE!");
@@ -156,6 +159,7 @@ export default function HistoInfo({ labelSuffix = '', index }) {
           {/* <TwoEntriesToggle options={currencyOptions} /> */}
         </div>
       </div>
+      
     </div>
   );
 }

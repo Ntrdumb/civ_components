@@ -1,5 +1,7 @@
 import React from 'react';
 
+/* InfoType : L'option toggle choisit (Ex: 'globales' ou 'commerces')
+   toggleInfoType : Toggle handler du parent */
 export default function SideToggle({ infoType, toggleInfoType }) {
   return (
     <div className="max-w-md mx-auto flex justify-center items-center pb-1">

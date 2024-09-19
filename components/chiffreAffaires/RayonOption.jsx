@@ -1,9 +1,11 @@
 import { ChevronDownIcon } from 'lucide-react';
 
 function RayonOption({ radiusOptions = [], onRadiusChange, selectedRadius }) { 
+  
+  // Handles le changement quand tu select
   const handleRadiusChange = (e) => {
     const selectedRadius = e.target.value;
-    onRadiusChange(selectedRadius); // Call the parent handler to update the radius in context
+    onRadiusChange(selectedRadius); // From the parent handler to update the radius in context
   };
 
   return (

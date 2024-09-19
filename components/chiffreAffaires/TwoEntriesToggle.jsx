@@ -1,10 +1,11 @@
 import { useState, forwardRef, useImperativeHandle } from 'react';
 
-// Forward the ref to the parent to allow access to internal methods
+// Forward the ref to the parent to allow access to internal methods 
+// (Ex: use a ref to get this component then do .getSelectedOption to get the selected option) (Projet.jsx)
 const TwoEntriesToggle = forwardRef(({ options }, ref) => {
   const [selectedOption, setSelectedOption] = useState(options[0]);
 
-  // Toggle the option between the two available options
+  // Toggles the option between the two available options
   const toggleOption = () => {
     const newOption = selectedOption === options[0] ? options[1] : options[0];
     setSelectedOption(newOption);

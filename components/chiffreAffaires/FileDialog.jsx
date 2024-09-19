@@ -2,54 +2,51 @@ import { useState, useRef } from 'react';
 
 export default function FileDialog({ labelSuffix = '', selectedFile, onFileSelect, onFileRemove }) {
   const fileInputRef = useRef(null);
-  // const [selectedFile, setSelectedFile] = useState(null); // State for file selection
-  const [isDragActive, setIsDragActive] = useState(false); // State for drag and drop
+  const [isDragActive, setIsDragActive] = useState(false);
 
+  // Handles the current clicked file input dialog
   const handleClick = () => {
     fileInputRef.current.click();
   };
 
-  // Handle file input change
+  // Handles file input change
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Get the selected file
     if (file) {
-      // setSelectedFile(file); // Save the file in state
-      onFileSelect(file); // Call the provided onFileSelect prop
-      // console.log(file.name);
+      onFileSelect(file); // From the provided onFileSelect prop
     }
   };
   
-  // Handle file drop (drag and drop)
+  // Handles file drop (drag and drop)
   const handleFileDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
     const file = e.dataTransfer.files[0];
     if (file) {
-      // setSelectedFile(file); // Save the file in state
       onFileSelect(file); // Call the provided onFileSelect prop
     }
     setIsDragActive(false); // Remove drag active state
   };
 
-  // Handle drag over (to allow dropping)
+  // Handles drag over (to allow dropping)
   const handleDragOver = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragActive(true); // Set drag active state
   };
 
-  // Handle drag leave (when dragging leaves the div)
+  // Handles drag leave (when dragging leaves the div)
   const handleDragLeave = () => {
     setIsDragActive(false); // Remove drag active state
   };
 
-  // Handle file removal
+  // Handles file removal
   const handleFileRemove = () => {
     // setSelectedFile(null); // Remove the file from state
     onFileRemove();
   };
 
-  // Abbreviate file name if it's too long
+  // Abbreviates file name if it's too long
   const abbreviateFileName = (fileName) => {
     return fileName.length > 12 ? fileName.slice(0, 9) + '...' : fileName;
   };

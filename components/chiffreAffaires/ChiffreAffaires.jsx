@@ -19,23 +19,14 @@ export default function ChiffreAffaires({ chiffrePotentiel='0' ,precisionLevel =
   const [activeTab, setActiveTab] = useState('persona');
   const [currency, setCurrency] = useState('$cad');
 
+  // Toggles the expansion
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
 
+  // Handles the currency change by setting it
   const handleCurrencyChange = (e) => {
     setCurrency(e.target.value);
-  };
-
-  const getCurrencySymbol = () => {
-    switch (currency) {
-      case '$usd':
-        return '$usd';
-      case '€eur':
-        return '€eur';
-      default:
-        return '$cad';
-    }
   };
 
   return (
@@ -51,7 +42,7 @@ export default function ChiffreAffaires({ chiffrePotentiel='0' ,precisionLevel =
             <InfoIcon size={20} />
           </button>
         </div>
-      </div>
+      </div> {/* Header with title and icons end */}
 
       {/* Content */}
       <div className="flex flex-col items-center">
@@ -65,7 +56,7 @@ export default function ChiffreAffaires({ chiffrePotentiel='0' ,precisionLevel =
                 <p className="text-sm mb-1">Chiffre d'affaires potentiel sommaire</p>
                 <div>
                   <p className="text-4xl font-bold">
-                    {chiffrePotentiel} {getCurrencySymbol()}
+                    {chiffrePotentiel} {currency}
                   </p>
                 </div>
                 <p className="text-xs">selon nos calculs</p>
@@ -85,7 +76,7 @@ export default function ChiffreAffaires({ chiffrePotentiel='0' ,precisionLevel =
                 <option value="€eur">€eur</option>
               </select>
             </div>
-          </div>
+          </div> {/* Top part end */}
 
           {/* Precision */}
           <div className="mb-4">
@@ -141,7 +132,7 @@ export default function ChiffreAffaires({ chiffrePotentiel='0' ,precisionLevel =
                 </button>
               </div>
 
-              {/* Always render the content of each tab, but hide the inactive tabs */}
+              {/* Main bottom content tab*/}
               <div>
                 <div style={{ display: activeTab === 'persona' ? 'block' : 'none' }}>
                   <Persona />
@@ -152,11 +143,11 @@ export default function ChiffreAffaires({ chiffrePotentiel='0' ,precisionLevel =
                 <div style={{ display: activeTab === 'historique' ? 'block' : 'none' }}>
                   <Historique />
                 </div>
-              </div>
+              </div> {/* Main bottom content tab end */}
             </div>
           </Collapse>
-        </div>
-      </div>
+        </div> {/* Bottom part (Additional information) end */}
+      </div> {/* Content end */}
     </div>
   );
 }

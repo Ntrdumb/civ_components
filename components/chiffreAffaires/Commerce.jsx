@@ -12,9 +12,8 @@ export default function Commerce({ index, commerce, handleRemoveCommerce, commer
       handleSaveCommerce(index, 'isAddressSet', true);
     }
   };
-
+  
   const handleRadiusChange = (selectedRadius) => {
-    // Save the selected radius to the commerce object in context
     handleSaveCommerce(index, 'radius', selectedRadius);
   };
 

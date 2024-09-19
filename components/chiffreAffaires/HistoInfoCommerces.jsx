@@ -5,6 +5,8 @@ import Commerce from './Commerce';
 export default function HistoInfoCommerces() {
   const { commerces, setCommerces } = useCommerceContext();
 
+  // Handles the removal of a commerce depending on the length of commerces
+  // Bc if there's only one commerce, we don't want to remove it and remove the option to add a commerce
   const handleRemoveCommerce = (index) => {
     if (commerces.length > 1) {
       let updatedCommerces = commerces.filter((_, idx) => idx !== index);
@@ -33,7 +35,7 @@ export default function HistoInfoCommerces() {
     }
   };
 
-  // Function to add a new commerce
+  // Handle the add of a new commerce
   const handleAddCommerce = () => {
     setCommerces([...commerces, { num: commerces.length + 1, address: '', isAddressSet: false, averageBasket: '', totalExpenses: '', globalTurnover: '', selectedFile: null }]);
   };
