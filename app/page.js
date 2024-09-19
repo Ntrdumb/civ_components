@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main className="flex items-center justify-center min-h-screen">
         <div>
-          <ChiffreAffaires />
+          <ChiffreAffaires chiffrePotentiel='500 000'/>
         </div>
     </main>
   );

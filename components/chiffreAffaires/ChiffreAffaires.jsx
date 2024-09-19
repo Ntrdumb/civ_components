@@ -14,12 +14,28 @@ function getPrecisionColor(precisionLevel) {
   return `rgb(${r}, ${g}, ${b})`;
 }
 
-export default function ChiffreAffaires({ precisionLevel = 50 }) {
+export default function ChiffreAffaires({ chiffrePotentiel='0' ,precisionLevel = 50 }) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [activeTab, setActiveTab] = useState('persona');
+  const [currency, setCurrency] = useState('$cad');
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const handleCurrencyChange = (e) => {
+    setCurrency(e.target.value);
+  };
+
+  const getCurrencySymbol = () => {
+    switch (currency) {
+      case '$usd':
+        return '$usd';
+      case '€eur':
+        return '€eur';
+      default:
+        return '$cad';
+    }
   };
 
   return (
@@ -42,10 +58,33 @@ export default function ChiffreAffaires({ precisionLevel = 50 }) {
         {/* Top part */}
         <div className="w-5/6 items-center">
           {/* Revenue info section */}
-          <div className="bg-teal-500 rounded-lg p-4 mb-4">
-            <p className="text-sm mb-1">Chiffre d'affaires potentiel sommaire</p>
-            <p className="text-4xl font-bold">500 000 $cad</p>
-            <p className="text-xs">selon nos calculs</p>
+          <div className='flex justify-normal items-start'>
+            <div className="bg-teal-500 rounded-bl-lg rounded-br-lg rounded-tl-lg p-4 mb-4">
+              {/* Sommaire */}
+              <div>
+                <p className="text-sm mb-1">Chiffre d'affaires potentiel sommaire</p>
+                <div>
+                  <p className="text-4xl font-bold">
+                    {chiffrePotentiel} {getCurrencySymbol()}
+                  </p>
+                </div>
+                <p className="text-xs">selon nos calculs</p>
+              </div>
+            </div>
+
+            {/* Currency Selector */}
+            <div className="bg-teal-500 rounded-r-lg p-3 mb-4">
+              <select
+                id="currency"
+                value={currency}
+                onChange={handleCurrencyChange}
+                className="border border-gray-300 rounded p-2 text-sm"
+              >
+                <option value="$cad">$cad</option>
+                <option value="$usd">$usd</option>
+                <option value="€eur">€eur</option>
+              </select>
+            </div>
           </div>
 
           {/* Precision */}

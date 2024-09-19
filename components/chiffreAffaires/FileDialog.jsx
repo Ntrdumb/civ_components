@@ -15,7 +15,7 @@ export default function FileDialog({ labelSuffix = '', selectedFile, onFileSelec
     if (file) {
       // setSelectedFile(file); // Save the file in state
       onFileSelect(file); // Call the provided onFileSelect prop
-      console.log(file.name);
+      // console.log(file.name);
     }
   };
   

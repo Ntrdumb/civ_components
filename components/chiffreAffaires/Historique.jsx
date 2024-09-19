@@ -26,7 +26,7 @@ export default function Historique() {
           ref={histoInfoRef}
           className={`${infoType === 'globales' ? 'block' : 'hidden'}`}
         >
-          {console.log("HistoInfo")}
+          {/* {console.log("HistoInfo")} */}
           <HistoInfo />
         </div>
 
@@ -35,7 +35,7 @@ export default function Historique() {
           className={`${infoType === 'commerces' ? 'block' : 'hidden'}`}
         >
           <CommerceProvider>
-            {console.log("HistoInfoCommerces")}
+            {/* {console.log("HistoInfoCommerces")} */}
             <HistoInfoCommerces />
           </CommerceProvider>
         </div>

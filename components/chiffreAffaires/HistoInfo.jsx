@@ -4,13 +4,14 @@ import FileDialog from './FileDialog';
 import TwoEntriesToggle from './TwoEntriesToggle';
 
 export default function HistoInfo({ labelSuffix = '', index }) {
-  let commerce, handleSaveCommerce;
+  let commerce, handleSaveCommerce, allCommerces;
 
   // Check if the context is available
   try {
     const context = useCommerceContext();
     commerce = context.commerces ? context.commerces[index] : undefined;
     handleSaveCommerce = context.handleSaveCommerce;
+    allCommerces = context.commerces;
   } catch (error) {
     // Context is not available, so fallback to local state
     commerce = undefined;
@@ -22,18 +23,30 @@ export default function HistoInfo({ labelSuffix = '', index }) {
   const [globalTurnover, setGlobalTurnover] = useState(commerce?.globalTurnover || '');
   const [selectedFile, setSelectedFile] = useState(commerce?.selectedFile || null);
 
-  // Add a guard to prevent accessing properties of undefined
-  // if (!commerce) {
-  //   return <div>Loading...</div>;  // Or handle the case where commerce is undefined
-  // }
-
   const currencyOptions = ['$ CAD', '€ EUR'];
 
   function getEverything() {
-    // const fileInfo = `File: ${selectedFile.name}, Size: ${selectedFile.size} bytes, Type: ${selectedFile.type}`;
-    console.log("Mon Historique: " + averageBasket + ", " + totalExpenses + ", " + globalTurnover + ", ");
-    if (selectedFile) {
-      console.log(selectedFile.name);
+    if (handleSaveCommerce) {
+      // const fileInfo = `File: ${selectedFile.name}, Size: ${selectedFile.size} bytes, Type: ${selectedFile.type}`;
+      if (allCommerces) {
+        console.log('All commerces details:');
+        allCommerces.forEach((commerce, idx) => {
+          console.log(
+            `Commerce ${commerce.num}:\n`,
+            `- Address: ${commerce.address}\n`,
+            `- Average Basket: ${commerce.averageBasket}\n`,
+            `- Total Expenses: ${commerce.totalExpenses}\n`,
+            `- Global Turnover: ${commerce.globalTurnover}\n`,
+            `- Radius: ${commerce.radius}\n`,
+            `- Selected File: ${commerce.selectedFile ? commerce.selectedFile.name : 'No file selected'}`
+          );
+        });
+      }
+    }
+    else {
+      // const fileInfo = `File: ${selectedFile.name}, Size: ${selectedFile.size} bytes, Type: ${selectedFile.type}`;
+      console.log("Mon Historique: " + averageBasket + ", " + totalExpenses + ", " + globalTurnover + ", ");
+      console.log("Selected File:", selectedFile ? selectedFile.name : 'No file selected');
     }
   }
   
@@ -55,7 +68,7 @@ export default function HistoInfo({ labelSuffix = '', index }) {
 
   const handleSaveField = (field, value) => {
     if (handleSaveCommerce) {
-      console.log("THERES A COMMERCE!");
+      // console.log("THERES A COMMERCE!");
       handleSaveCommerce(index, field, value);
     } else {
       // Update local state when not connected to context
@@ -77,10 +90,10 @@ export default function HistoInfo({ labelSuffix = '', index }) {
   
   return (
     <div className="space-y-4 mt-2">
-      <button className="bg-white p-1.5 rounded-md border border-gray-300 text-gray-500 hover:text-gray-700 fixed right-0"
+      {/* <button className="bg-white p-1.5 rounded-md border border-gray-300 text-gray-500 hover:text-gray-700 fixed right-0"
           onClick={getEverything}>
           Get it Histo
-      </button>
+      </button> */}
       {/* Panier moyen et total des dépenses */}
       <div className="flex space-x-4 text-gray-700">
         {/* Textbox div */}

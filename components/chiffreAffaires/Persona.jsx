@@ -14,6 +14,11 @@ export default function Persona() {
 
     return (
         <div>
+            <button className="bg-white p-1.5 rounded-md border border-gray-300 text-gray-500 hover:text-gray-700 fixed right-0"
+                    onClick={getEverything}>
+                Get it
+            </button>
+
             <div className="flex items-end space-x-2">
             <textarea 
                 className="flex-grow bg-white border border-gray-300 rounded p-2 text-sm placeholder:italic resize-none"
@@ -38,11 +43,6 @@ export default function Persona() {
                 </span>
             ))}
             </div>
-            
-            <button className="bg-white p-1.5 rounded-md border border-gray-300 text-gray-500 hover:text-gray-700 fixed right-0"
-                    onClick={getEverything}>
-                Get it
-            </button>
             
         </div>
     )

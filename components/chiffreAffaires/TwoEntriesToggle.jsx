@@ -1,13 +1,19 @@
-import { useState } from 'react';
+import { useState, forwardRef, useImperativeHandle } from 'react';
 
-export default function TwoEntriesToggle({ options, onToggle }) {
+// Forward the ref to the parent to allow access to internal methods
+const TwoEntriesToggle = forwardRef(({ options }, ref) => {
   const [selectedOption, setSelectedOption] = useState(options[0]);
 
+  // Toggle the option between the two available options
   const toggleOption = () => {
     const newOption = selectedOption === options[0] ? options[1] : options[0];
     setSelectedOption(newOption);
-    if (onToggle) onToggle(newOption); // Call the callback function when toggled
   };
+
+  // Allows the parent to get the currently selected option
+  useImperativeHandle(ref, () => ({
+    getSelectedOption: () => selectedOption
+  }));
 
   return (
     <div className="max-w-md mx-auto ml-3">
@@ -23,7 +29,6 @@ export default function TwoEntriesToggle({ options, onToggle }) {
               selectedOption === options[1] ? 'translate-x-full' : 'translate-x-0'
             }`}
           />
-
           {/* First option */}
           <span
             className={`relative w-1/2 text-center transition-all duration-300 ${
@@ -32,7 +37,6 @@ export default function TwoEntriesToggle({ options, onToggle }) {
           >
             {options[0]}
           </span>
-
           {/* Second option */}
           <span
             className={`relative w-1/2 text-center transition-all duration-300 ${
@@ -45,4 +49,6 @@ export default function TwoEntriesToggle({ options, onToggle }) {
       </div>
     </div>
   );
-}
+});
+
+export default TwoEntriesToggle;

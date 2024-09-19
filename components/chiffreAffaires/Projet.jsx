@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import TwoEntriesToggle from './TwoEntriesToggle';
 
 export default function Projet() {
@@ -13,20 +13,26 @@ export default function Projet() {
     expenses: ''
   });
 
+  const surfaceToggleRef = useRef();
+
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   function getEverything() {
-    console.log("Mon Projet: " + formData.budget + ", " + formData.surface + ", " + formData.employees + ", " + formData.salary + ", " + formData.expenses );
+    const selectedSurface = surfaceToggleRef.current.getSelectedOption();
+    
+    console.log(`Mon Projet: Budget - ${formData.budget}, Surface - ${formData.surface} ${selectedSurface}, Employees - ${formData.employees}, Salary - ${formData.salary}, Expenses - ${formData.expenses}`);
   }
 
   return (
     <div className="space-y-4">
-      <button className="bg-white p-1.5 rounded-md border border-gray-300 text-gray-500 hover:text-gray-700 fixed right-0"
-          onClick={getEverything}>
-          Get it
-      </button>
+      {/* <button
+        className="bg-white p-1.5 rounded-md border border-gray-300 text-gray-500 hover:text-gray-700 fixed right-0"
+        onClick={getEverything}
+      >
+        Get it
+      </button> */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Le budget alloué au local commercial et/ou les coûts fournisseurs
@@ -40,8 +46,6 @@ export default function Projet() {
             className="flex-grow border border-gray-300 rounded p-2 text-sm placeholder:italic"
             placeholder="Écrivez le budget alloué"
           />
-          
-          {/* <TwoEntriesToggle options={currencyOptions}/> */}
         </div>
       </div>
 
@@ -59,7 +63,7 @@ export default function Projet() {
             placeholder="Écrivez la surface"
           />
 
-          <TwoEntriesToggle options={surfaceOptions}/>
+          <TwoEntriesToggle ref={surfaceToggleRef} options={surfaceOptions} />
         </div>
       </div>
 
@@ -90,7 +94,6 @@ export default function Projet() {
             className="flex-grow border border-gray-300 rounded p-2 text-sm placeholder:italic"
             placeholder="Écrivez le montant du salaire"
           />
-          {/* <TwoEntriesToggle options={currencyOptions}/> */}
         </div>
       </div>
 
@@ -107,7 +110,6 @@ export default function Projet() {
             className="flex-grow border border-gray-300 rounded p-2 text-sm placeholder:italic"
             placeholder="Écrivez les dépenses estimées"
           />
-          {/* <TwoEntriesToggle options={currencyOptions}/> */}
         </div>
       </div>
     </div>
