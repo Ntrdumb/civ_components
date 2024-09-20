@@ -49,8 +49,8 @@ export default function ChiffreAffaires({ chiffrePotentiel='0' ,precisionLevel =
         {/* Top part */}
         <div className="w-5/6 items-center">
           {/* Revenue info section */}
-          <div className='flex justify-normal items-start'>
-            <div className="bg-teal-500 rounded-bl-lg rounded-br-lg rounded-tl-lg p-4 mb-4">
+          <div>
+            <div className="bg-teal-500 rounded-lg p-4 mb-0.5 flex justify-between items-center">
               {/* Sommaire */}
               <div>
                 <p className="text-sm mb-1">Chiffre d'affaires potentiel sommaire</p>
@@ -59,23 +59,26 @@ export default function ChiffreAffaires({ chiffrePotentiel='0' ,precisionLevel =
                     {chiffrePotentiel} {currency}
                   </p>
                 </div>
+                
                 <p className="text-xs">selon nos calculs</p>
               </div>
+
+              {/* Currency Selector */}
+              <div>
+                  <select
+                    id="currency"
+                    value={currency}
+                    onChange={handleCurrencyChange}
+                    className="border border-gray-300 rounded p-2 text-sm"
+                  >
+                    <option value="$cad">$cad</option>
+                    <option value="$usd">$usd</option>
+                    <option value="€eur">€eur</option>
+                  </select>
+                </div>
             </div>
 
-            {/* Currency Selector */}
-            <div className="bg-teal-500 rounded-r-lg p-3 mb-4">
-              <select
-                id="currency"
-                value={currency}
-                onChange={handleCurrencyChange}
-                className="border border-gray-300 rounded p-2 text-sm"
-              >
-                <option value="$cad">$cad</option>
-                <option value="$usd">$usd</option>
-                <option value="€eur">€eur</option>
-              </select>
-            </div>
+            
           </div> {/* Top part end */}
 
           {/* Precision */}
@@ -116,19 +119,19 @@ export default function ChiffreAffaires({ chiffrePotentiel='0' ,precisionLevel =
                   className={`px-3 py-3 rounded-xl text-sm ${activeTab === 'persona' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                   onClick={() => setActiveTab('persona')}
                 >
-                  Mon persona ciblé
+                  Persona ciblé
                 </button>
                 <button
                   className={`px-3 py-3 rounded-xl text-sm ${activeTab === 'projet' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                   onClick={() => setActiveTab('projet')}
                 >
-                  Mon projet
+                  Projet
                 </button>
                 <button
                   className={`px-3 py-3 rounded-xl text-sm ${activeTab === 'historique' ? 'bg-teal-500 text-white' : 'bg-gray-200 text-gray-700'}`}
                   onClick={() => setActiveTab('historique')}
                 >
-                  Mon historique
+                  Historique
                 </button>
               </div>
 
